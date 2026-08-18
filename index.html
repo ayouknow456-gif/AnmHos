@@ -304,6 +304,8 @@
   .wheel-odds{margin-top:12px;font:11px 'JetBrains Mono',monospace;color:#8faea4;}
   .wheel-odds b{color:#ff8b8b;}
 
+
+
   .quick-cctv-btn{
     display:none;margin:12px auto 0;padding:10px 18px;border-radius:10px;
     border:1px solid #315f57;background:#102f2b;color:var(--paper);
@@ -320,16 +322,6 @@
   }
   .home-title{font-family:'Baloo 2',sans-serif;font-size:28px;font-weight:800;color:var(--paper);}
   .home-sub{font-size:13px;color:var(--mint-dim);margin-top:-12px;}
-  .home-actions{display:grid;grid-template-columns:repeat(2,minmax(220px,1fr));gap:16px;width:min(620px,100%);}
-  .home-btn{
-    min-height:110px;border:1px solid #2c5a54;border-radius:16px;background:var(--bg-panel-2);
-    color:var(--paper);cursor:pointer;text-align:left;padding:20px;transition:.16s transform,.16s border-color,.16s background;
-  }
-  .home-btn:hover{transform:translateY(-2px);border-color:var(--coral);background:#20504b;}
-  .home-btn .icon{font-size:28px;margin-bottom:8px;}
-  .home-btn .title{font-family:'Baloo 2',sans-serif;font-size:19px;font-weight:800;}
-  .home-btn .desc{font-size:12px;color:var(--mint-dim);margin-top:4px;line-height:1.5;}
-  @media(max-width:650px){.home-actions{grid-template-columns:1fr;}}
 
   /* Realistic CCTV viewer */
   #cctv-view{
@@ -733,37 +725,14 @@
     document.getElementById('login-screen').style.display='none';
     document.getElementById('kiosk').style.display='block';
     hdrStaff.textContent = staffName;
-    goHome();
+    goAdmission();
   }
   enterBtn.addEventListener('click', doLogin);
   nameInput.addEventListener('keydown', e=>{ if(e.code==='Enter') doLogin(); });
 
   /* ---------------- HOME / admission / CCTV ---------------- */
   function goHome(){
-    state = S.HOME;
-    showQuickCCTV(false);
-    hdrQueue.textContent = `คิวถัดไป: ${String(queueNum).padStart(3,'0')}`;
-    stage.innerHTML = `
-      <div id="home-menu">
-        <div class="home-title">ศูนย์ควบคุมโรงพยาบาลสัตว์</div>
-        <div class="home-sub">เลือกงานที่ต้องการดำเนินการ</div>
-        <div class="home-actions">
-          <button class="home-btn" id="admission-btn">
-            <div class="icon">🏥</div>
-            <div class="title">รับผู้ป่วย</div>
-            <div class="desc">เปิดขั้นตอนลงทะเบียน ถ่ายภาพ และออกบัตรคิว</div>
-          </button>
-          <button class="home-btn" id="cctv-btn">
-            <div class="icon">📹</div>
-            <div class="title">ดูกล้องวงจรปิด</div>
-            <div class="desc">ตรวจสอบกล้องรักษาความปลอดภัยแบบเรียลไทม์</div>
-          </button>
-        </div>
-      </div>
-    `;
-    document.getElementById('admission-btn').onclick = goAdmission;
-    document.getElementById('cctv-btn').onclick = openCCTV;
-    setHint(`เลือกเมนูด้านบน`);
+    goAdmission();
   }
 
   function goAdmission(){
@@ -1065,6 +1034,7 @@
   function nextStep(){
     if(busy) return;
     switch(state){
+      case S.HOME: goAdmission(); break;
       case S.MAIN: busy=true; doStamp(); busy=false; break;
       case S.STAMPED: busy=true; doSign(); busy=false; break;
       case S.SIGNED: busy=true; openCamera(); busy=false; break;
