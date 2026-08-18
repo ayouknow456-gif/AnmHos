@@ -373,9 +373,8 @@
 
   /* ---------------- data pools ---------------- */
   const SPECIES = [
-    {th:"สุนัข", en:"Canine"}, {th:"แมว", en:"Feline"}, {th:"กระต่าย", en:"Rabbit"},
-    {th:"นกแก้ว", en:"Parrot"}, {th:"หนูแฮมสเตอร์", en:"Hamster"}, {th:"เต่า", en:"Tortoise"},
-    {th:"เฟอร์เร็ต", en:"Ferret"}, {th:"อิเกวียน่า", en:"Iguana"}
+    {th:"หยก", en:"yok"}, {th:"หมอ", en:"DOCT"}, {th:"ดร.", en:"DR"},
+
   ];
   const NAME_POOL = [
     "ไฮคิว","อันดา","เก้า","หยก","ญาญ่า","เกิ้ล","เตย","เบลล่า","ข้าวปั้น","กัปตัน",
@@ -564,7 +563,7 @@
       tag.style.marginTop = '14px';
       tag.innerHTML = `
         <div class="name">${currentPatient.name}</div>
-        <div class="species">สายพันธุ์: ${currentPatient.species.th} (${currentPatient.species.en})</div>
+        <div class="species">ผู้ตรวจ: ${currentPatient.species.th} (${currentPatient.species.en})</div>
       `;
       wrap.insertAdjacentElement('afterend', tag);
       setHint(`กด <span class="keycap" id="kc1">Space</span> เพื่อยืนยันข้อมูล`);
@@ -612,7 +611,7 @@
       <div id="ticket">
         <div class="t-title">ANIMAL HOSPITAL</div>
         <div class="t-row"><span>ชื่อสัตว์ป่วย</span><span>${currentPatient.name}</span></div>
-        <div class="t-row"><span>สายพันธุ์</span><span>${currentPatient.species.th}</span></div>
+        <div class="t-row"><span>ผู้ตรวจ</span><span>${currentPatient.species.th}</span></div>
         <div class="t-row"><span>อาการ</span><span></span></div>
         <div style="margin:-2px 0 6px;color:#5a4d38;">${currentPatient.symptom}</div>
         <div class="t-queue">คิว ${String(currentPatient.queue).padStart(3,'0')}</div>
